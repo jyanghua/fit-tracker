@@ -23,7 +23,7 @@
 ## Members and Roles
 List each team member and their role in creating the project
 
-*Riley Garcia
-*Manuel Macedonio
-*Jack Yang
-*Salvador Villalon
+* Riley Garcia
+* Manuel Macedonio
+* Jack Yang
+* Salvador Villalon
