@@ -8,7 +8,9 @@
 
 ## Overview
 ### Description
-[Description of your app]
+Fit-tracker is an app that will allow users to track the progress of their workouts over time. 
+The user will be able to add a workout session where they will input the type of workout (e.g. pushup, curls, barbell lifting)
+and how many reps. The user will also be able to see their workout history and peformance growth. 
 
 ## Walkthrough
 [include GIF(s)]
