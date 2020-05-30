@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".auth.AuthActivity"
+    android:padding="40dp">
+
+    <ImageView
+        android:id="@+id/ivLogoSignUp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        app:srcCompat="@drawable/logo"
+        android:contentDescription="@string/logo"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiUsernameSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AuthTextInputStyle"
+        android:layout_below="@+id/ivLogoSignUp"
+        android:layout_marginTop="25dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:ems="10"
+            android:hint="@string/username"
+            android:inputType="text"
+            android:textCursorDrawable="@null"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tiPasswordSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AuthTextInputStyle"
+        android:layout_below="@+id/tiUsernameSignUp"
+        android:layout_marginTop="15dp"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="@android:color/darker_gray">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:textSize="14sp"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textCursorDrawable="@null"
+            android:maxLines="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnCreateNewAccountSignUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tiPasswordSignUp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:height="60dp"
+        android:backgroundTint="@color/colorButtonLogin"
+        android:textStyle="bold"
+        android:text="@string/create_new_account"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/tvAlreadyHaveAccount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnCreateNewAccountSignUp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:backgroundTint="#00FBFBFB"
+        android:text="@string/already_have_account_log_in"
+        tools:text="@string/already_have_account_log_in"
+        android:textAllCaps="false"
+        android:textColor="@color/textPrimaryLight" />
+
+
+</RelativeLayout>

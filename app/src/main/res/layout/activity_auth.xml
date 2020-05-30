@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/auth_container"
+    tools:context=".auth.AuthActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/authContainer"
+        android:padding="20dp"
+        android:orientation="vertical"
+        tools:ignore="UselessParent">
+
+        <ImageView
+            android:id="@+id/ivAuthLogo"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="100dp"
+            android:layout_centerHorizontal="true"
+            app:srcCompat="@drawable/logo"
+            android:contentDescription="@string/logo" />
+
+        <Button
+            android:id="@+id/btnCreateNewAccountAuth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivAuthLogo"
+            android:layout_marginTop="50dp"
+            android:height="60dp"
+            android:backgroundTint="@color/colorButtonLogin"
+            android:text="@string/create_new_account"
+            android:textAllCaps="false"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvLogInAuth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnCreateNewAccountAuth"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="10dp"
+            android:textColor="@color/colorButtonLogin"
+            android:textStyle="bold"
+            android:text="@string/log_in" />
+
+    </RelativeLayout>
+
+</FrameLayout>
