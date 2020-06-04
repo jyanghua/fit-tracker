@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
     android:layout_marginEnd="8dp"
@@ -23,34 +24,10 @@
         android:textSize="24sp"
         tools:text="06/02/2020" />
 
-    <TextView
-        android:id="@+id/tvName"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvChild"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="PushUps" />
-
-    <TextView
-        android:id="@+id/tvSets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Sets: 3" />
-
-    <TextView
-        android:id="@+id/tvReps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Reps: 10,10,10" />
-
-    <TextView
-        android:id="@+id/tvWeight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Weight; N/A" />
-
-    <TextView
-        android:id="@+id/tvDuration"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:text="Duration: N/A" />
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

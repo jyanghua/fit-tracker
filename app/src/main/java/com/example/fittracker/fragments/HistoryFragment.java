@@ -9,17 +9,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.fittracker.History;
-import com.example.fittracker.HistoryAdapter;
+import com.example.fittracker.HistoryParentAdapter;
 import com.example.fittracker.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,8 +31,8 @@ public class HistoryFragment extends Fragment {
 
     public static final String TAG = "HistoryFragment";
     private RecyclerView rvHistory;
-    private HistoryAdapter adapter;
-    private List<History> allHistory;
+    protected HistoryParentAdapter adapter;
+    protected List<History> allHistory;
     private List<String> dates;
 
     public HistoryFragment() {
@@ -48,49 +51,39 @@ public class HistoryFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         rvHistory=view.findViewById(R.id.rvHistory);
         allHistory=new ArrayList<>();
-        adapter= new HistoryAdapter(getContext(), allHistory);
+
+        dates =new ArrayList<>();
+        initData();
+        Log.i(TAG,"dates: "+ allHistory);
+        adapter= new HistoryParentAdapter(getContext(), dates);
+
+
         rvHistory.setAdapter(adapter);
         rvHistory.setLayoutManager(new LinearLayoutManager((getContext())));
-        queryHistory();
+
     }
 
-    private void queryHistory() {
+    private void initData() {
         ParseQuery<History> query= ParseQuery.getQuery(History.class);
         query.include(History.KEY_USER);
+//        query.whereEqualTo(History.KEY_USER, ParseUser.getCurrentUser());
         query.addDescendingOrder(History.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<History>() {
             @Override
             public void done(List<History> histories, ParseException e) {
-                if (e != null){
-                    Log.e(TAG, "Issue with getting history", e);
-                    return;
-                }
-                for (History history: histories){
-                    Log.i(TAG,"Name:"+ history.getName()+" Sets: " + history.getSets()+" Reps: " +history.getReps()+ " Duration: "+history.getDuration()
-                    + " Type: "+history.getType()+ " Weight: "+ history.getWeight() + " User: "+ history.getUser()+" Date: "+history.getWorkoutDay());
-                }
-                Log.i(TAG, "Histories" + histories +" history position 1"+ histories.get(0).getName());
-
                 allHistory.addAll(histories);
-
-
-                dates =new ArrayList<>();
                 for(int i=0; i<histories.size();i++){
-                    dates.add(histories.get(i).getWorkoutDay());
-                    //Test: get specific information from one type of workout
-//                    if(histories.get(i).getName().equals("Push-Ups")){
-//                        allHistory.add(histories.get(i));
-//                    }
-
-                }
-
+                    dates.add(histories.get(i).getWorkoutDay());}
                 Set<String> uniqueDates=new HashSet<String>(dates);
+                dates.clear();
+                dates.addAll(uniqueDates);
+                Collections.sort(dates, Collections.<String>reverseOrder()); //sorts unique dates by descending order
                 Log.i(TAG,"Dates: "+ dates+" Unique Dates "+uniqueDates); //Creates a list of unique dates
-
                 adapter.notifyDataSetChanged();
             }
         });
     }
+
 
 
 }
