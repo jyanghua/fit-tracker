@@ -2,6 +2,7 @@ package com.example.fittracker;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -17,7 +18,7 @@ public class History extends ParseObject{
     public static final String KEY_NAME="Name";
     public static final String KEY_DURATION="Duration";
     public static final String KEY_WEIGHT="Weight";
-    public static final String KEY_USER="User";
+    public static final String KEY_USER="user";
     public static final String KEY_DATE= "WorkoutDay";
     public static final String KEY_CREATED_AT="createdAt";
 
@@ -65,8 +66,8 @@ public class History extends ParseObject{
         put(KEY_WEIGHT,weight);
     }
 
-    public String getUser(){
-        return getString(KEY_USER);
+    public ParseUser getUser(){
+        return getParseUser(KEY_USER);
     }
 
     public String getWorkoutDay(){
