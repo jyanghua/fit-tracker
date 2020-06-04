@@ -3,8 +3,6 @@ package com.example.fittracker;
 import android.app.Application;
 
 //import com.example.parstagram.models.Post;
-import com.example.fittracker.workout.AvailableWorkouts;
-import com.example.fittracker.workout.PresetWorkout;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -15,6 +13,8 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Register your parse models
+        ParseObject.registerSubclass(History.class);
+
         ParseObject.registerSubclass(AvailableWorkouts.class);
         ParseObject.registerSubclass(PresetWorkout.class);
         // set applicationId, and server server based on the values in the Heroku settings.
