@@ -1,29 +1,39 @@
 package com.example.fittracker.workout;
 
+import android.app.Activity;
+import android.app.AppComponentFactory;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.example.fittracker.R;
+import com.example.fittracker.MainActivity;
+import com.example.fittracker.R;;
+import com.example.fittracker.fragments.NewWorkoutFragment;
 import com.parse.ParseFile;
 
 import java.util.List;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
 
     private Context context;
+    private Activity hostActivity;
     List<AvailableWorkouts> availableWorkouts;
 
-    public WorkoutAdapter (Context context, List<AvailableWorkouts> availableWorkouts) {
+    public WorkoutAdapter (Context context, List<AvailableWorkouts> availableWorkouts, Activity hostActivity) {
         this.context = context;
         this.availableWorkouts = availableWorkouts;
+        this.hostActivity = hostActivity;
     }
 
     @NonNull
@@ -46,18 +56,43 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvWorkoutName;
+        private Button btnWorkoutName;
         private ImageButton ibWorkout;
+        private String type;
 
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView)
+        {
             super(itemView);
 
-            tvWorkoutName = itemView.findViewById(R.id.tvWorkout);
+            btnWorkoutName = itemView.findViewById(R.id.btnWorkoutName);
             ibWorkout = itemView.findViewById(R.id.ibWorkout);
+
+            String tag = "AddNewWorkout";
+            btnWorkoutName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment fragment = new NewWorkoutFragment(btnWorkoutName.getText().toString(), type);
+                    activity.getSupportFragmentManager().beginTransaction().
+                            replace(R.id.mainContainer, fragment).addToBackStack(null).commit();
+                }
+            });
+
+            ibWorkout.setOnClickListener( new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AppCompatActivity activity = (AppCompatActivity) view.getContext();
+                    Fragment fragment = new NewWorkoutFragment();
+                    activity.getSupportFragmentManager().beginTransaction().
+                            replace(R.id.mainContainer, fragment).addToBackStack(null).commit();
+                }
+            });
+
         }
 
         public void bind(AvailableWorkouts workoutAvailable) {
-            tvWorkoutName.setText(workoutAvailable.getKeyName());
+            btnWorkoutName.setText(workoutAvailable.getKeyName());
+            type = workoutAvailable.getKeyType();
             ParseFile image = workoutAvailable.getKeyImage();
             if ( image != null ) {
                 Glide.with(context).load(image.getUrl()).into(ibWorkout);

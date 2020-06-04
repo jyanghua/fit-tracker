@@ -1,5 +1,6 @@
 package com.example.fittracker.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,9 +29,15 @@ public class AddWorkoutFragment extends Fragment {
     private RecyclerView rvWorkouts;
     protected WorkoutAdapter wAdapter;
     protected List<AvailableWorkouts> allWorkouts;
+    private Activity hostActivity;
+
 
     public AddWorkoutFragment() {
         //Required Empty Constructor
+    }
+
+    public AddWorkoutFragment (Activity hostActivity) {
+        this.hostActivity = hostActivity;
     }
 
     @Nullable
@@ -46,7 +53,7 @@ public class AddWorkoutFragment extends Fragment {
 
         rvWorkouts = view.findViewById(R.id.rvWorkouts);
         allWorkouts = new ArrayList<>();
-        wAdapter = new WorkoutAdapter(getContext(), allWorkouts);
+        wAdapter = new WorkoutAdapter(getContext(), allWorkouts, hostActivity);
 
         rvWorkouts.setAdapter(wAdapter);
         rvWorkouts.setLayoutManager(new LinearLayoutManager(getContext()));

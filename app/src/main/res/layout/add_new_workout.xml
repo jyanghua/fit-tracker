@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/llAddWorkoutCont"
+        android:id="@+id/rvAddSets"
         android:layout_width="match_parent"
         android:layout_height="393dp"
         android:layout_margin="10dp"
@@ -15,7 +15,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/tvnameOfWorkout"
+            android:id="@+id/tvNameOfWorkout"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:text="@string/name_of_workout"
@@ -26,26 +26,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
+            android:hint="@string/add_a_workout_note"
             android:inputType="textPersonName"
             android:text="@string/add_a_workout_note" />
+
+        <TextView
+            android:id="@+id/tvLabels"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TextView" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvWorkoutSets"
             android:layout_width="match_parent"
-            android:layout_height="267dp" />
+            android:layout_height="215dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Button
-            android:id="@+id/btnAddWorkout"
+            android:id="@+id/btnAddSet"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:text="@string/add_set" />
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvWorkoutHistory"
-        android:layout_width="154dp"
+        android:layout_width="match_parent"
         android:layout_height="37dp"
-        android:layout_below="@+id/llAddWorkoutCont"
+        android:layout_below="@+id/rvAddSets"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
         android:text="@string/workout_history"
