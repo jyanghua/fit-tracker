@@ -1,9 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
+    <!--    <ImageView-->
+    <!--        android:id="@+id/ivLunges"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="70dp"-->
+    <!--        android:contentDescription="@string/lunges"-->
+    <!--        app:srcCompat="@mipmap/lunges_foreground" />-->
 
+    <ImageButton
+        android:id="@+id/ibLunges"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        app:srcCompat="@mipmap/lunges_foreground" />
 
-</LinearLayout>
+    <ImageButton
+        android:id="@+id/ibPushups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/push_ups"
+        android:background="#FFFFFF"
+        app:srcCompat="@mipmap/push_ups_foreground"
+        android:layout_below="@+id/ibLunges" />
+
+    <ImageButton
+        android:id="@+id/ibPullups"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/pull_ups"
+        app:srcCompat="@mipmap/pull_ups_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibPushups" />
+
+    <ImageButton
+        android:id="@+id/ibSquats"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/squats"
+        app:srcCompat="@mipmap/squats_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibPullups" />
+
+    <ImageButton
+        android:id="@+id/ibTricepDips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/tricep_dips"
+        app:srcCompat="@mipmap/tricep_dips_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibSquats" />
+
+    <ImageButton
+        android:id="@+id/ibPlanks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/planks"
+        app:srcCompat="@mipmap/planks_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibTricepDips" />
+
+    <ImageButton
+        android:id="@+id/ibFlutterKicks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/flutter_kicks"
+        app:srcCompat="@mipmap/flutter_kicks_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibPlanks" />
+
+    <ImageView
+        android:id="@+id/ibBicycleCrunches"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/bicycle_crunches"
+        app:srcCompat="@mipmap/bicycle_crunches_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibFlutterKicks" />
+
+    <ImageButton
+        android:id="@+id/ibSidePlanks"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/side_planks"
+        app:srcCompat="@mipmap/side_planks_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibBicycleCrunches" />
+
+    <ImageButton
+        android:id="@+id/ibDumbbellCurls"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/dumbbell_curls"
+        app:srcCompat="@mipmap/dumbell_curls_foreground"
+        android:background="#FFFFFF"
+        android:layout_below="@+id/ibSidePlanks" />
+
+</RelativeLayout>

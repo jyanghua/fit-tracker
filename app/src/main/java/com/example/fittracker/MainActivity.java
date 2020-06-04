@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.fittracker.fragments.AddWorkoutFragment;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                             tag = HistoryFragment.TAG;
                             break;
                     }
+                    Log.i(tag, "Which tag is it:: " + tag);
                     assert selectedFragment != null;
                     getSupportFragmentManager().beginTransaction().replace(R.id.mainContainer,
                             selectedFragment, tag).commit();

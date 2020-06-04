@@ -8,4 +8,14 @@
     <string name="logo">Logo</string>
     <string name="create_new_account">Create New Account</string>
     <string name="logout">Logout</string>
+    <string name="planks">planks</string>
+    <string name="tricep_dips">tricep_dips</string>
+    <string name="squats">squats</string>
+    <string name="pull_ups">pull_ups</string>
+    <string name="push_ups">push_ups</string>
+    <string name="lunges">lunges</string>
+    <string name="flutter_kicks">flutter_kicks</string>
+    <string name="bicycle_crunches">bicyle_crunches</string>
+    <string name="side_planks">side_planks</string>
+    <string name="dumbbell_curls">dumbbell_curls</string>
 </resources>
