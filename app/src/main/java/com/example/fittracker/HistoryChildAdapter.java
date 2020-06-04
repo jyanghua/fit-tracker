@@ -50,15 +50,38 @@ public class HistoryChildAdapter extends RecyclerView.Adapter<HistoryChildAdapte
     class ViewHolder extends RecyclerView.ViewHolder{
 
         private TextView tvName;
-
+        private TextView tvReps;
+        private TextView tvSets;
+        private TextView tvWeight;
+        private TextView tvDuration;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName=itemView.findViewById(R.id.tvName);
+            tvReps=itemView.findViewById(R.id.tvReps);
+            tvSets=itemView.findViewById(R.id.tvSets);
+            tvWeight=itemView.findViewById(R.id.tvWeight);
+            tvDuration=itemView.findViewById(R.id.tvDuration);
+
         }
 
         public void bind(History history) {
             tvName.setText(history.getName());
+            tvSets.setText("Sets: "+history.getSets());
+            if (history.getDuration() ==0){
+                tvDuration.setText("Duration: N/A");
+                tvReps.setText("Reps: "+ history.getReps());
+
+            }else{
+                tvDuration.setText("Duration: "+ history.getDuration());
+                tvReps.setText("Reps: N/A");
+            }
+
+            if (history.getWeight()==0){
+                tvWeight.setText("Weight: N/A");
+            }else{
+                tvWeight.setText("Weight: "+ history.getWeight()+"lbs");
+            }
 
         }
     }

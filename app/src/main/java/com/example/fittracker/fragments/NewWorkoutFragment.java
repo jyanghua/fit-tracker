@@ -9,16 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.fittracker.History;
 import com.example.fittracker.R;
 import com.example.fittracker.workout.NewWorkoutAdapter;
 import com.example.fittracker.workout.PresetWorkout;
 import com.example.fittracker.workout.Workout;
+import com.example.fittracker.workout.currentWorkoutHistoryAdapter;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -32,7 +38,10 @@ public class NewWorkoutFragment extends Fragment {
     private RecyclerView rvWorkouts;
     private RecyclerView rvWorkoutHistory;
     protected NewWorkoutAdapter newWorkoutAdapter;
+    protected currentWorkoutHistoryAdapter currentWorkoutHistoryAdapter;
     protected Workout parentWorkout;
+
+    protected List<History> currentWorkoutHistory;
     protected List<Workout> currentSets;
     protected List<PresetWorkout> presetWorkouts;
     protected TextView tvWorkoutName;
@@ -80,12 +89,18 @@ public class NewWorkoutFragment extends Fragment {
         tvWorkoutHistoryText = view.findViewById(R.id.tvWorkoutHistory);
         tvWorkoutHistoryText.setText(workoutHistory);
 
+        rvWorkoutHistory=view.findViewById(R.id.rvWorkOutHistory); //Recycler view for workout history identified
+
         rvWorkouts = view.findViewById(R.id.rvWorkoutSets);
+        currentWorkoutHistory= new ArrayList<>();
+        getCurrentWorkoutHistory();
         currentSets = new ArrayList<>();
         presetWorkouts = new ArrayList<>();
         getPresetWorkouts();
         newWorkoutAdapter = new NewWorkoutAdapter(getContext(), currentSets);
-
+        currentWorkoutHistoryAdapter=new currentWorkoutHistoryAdapter(getContext(),currentWorkoutHistory);
+        rvWorkoutHistory.setAdapter(currentWorkoutHistoryAdapter);
+        rvWorkoutHistory.setLayoutManager(new LinearLayoutManager(getContext()));
         rvWorkouts.setAdapter(newWorkoutAdapter);
         rvWorkouts.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -96,6 +111,27 @@ public class NewWorkoutFragment extends Fragment {
                 newWorkoutAdapter.updateCurrentSets(currentSets);
                 Log.i(TAG, "A new workout set was added.");
                 newWorkoutAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    private void getCurrentWorkoutHistory() {
+        ParseQuery<History> query= ParseQuery.getQuery(History.class);
+        query.include(History.KEY_USER);
+        query.whereEqualTo(History.KEY_USER, ParseUser.getCurrentUser());
+        query.addDescendingOrder(History.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<History>() {
+            @Override
+            public void done(List<History> histories, ParseException e) {
+
+                for(int i=0; i<histories.size(); i++){
+                    if(histories.get(i).getName().equals(parentWorkout.getName())){
+                        currentWorkoutHistory.add(histories.get(i));
+                        Log.i(TAG,"history: "+ currentWorkoutHistory);
+
+                    }
+                }
+                currentWorkoutHistoryAdapter.notifyDataSetChanged();
             }
         });
     }
