@@ -25,13 +25,15 @@ public class HistoryParentAdapter extends RecyclerView.Adapter<HistoryParentAdap
     protected HistoryChildAdapter childAdapter;
     private RecyclerView rvChild;
     private Context context;
+    private List<History> currentHistory;
 
 
 
 
-    public HistoryParentAdapter(Context context, List<String> dates) {
+    public HistoryParentAdapter(Context context, List<String> dates, List<History> allHistory) {
         this.dates = dates;
         this.context= context;
+        this.allHistory=allHistory;
     }
 
     @NonNull
@@ -45,10 +47,11 @@ public class HistoryParentAdapter extends RecyclerView.Adapter<HistoryParentAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String date=dates.get(position);
+        currentHistory=new ArrayList<>();
+        Log.i(TAG,"history: "+ allHistory+"current date: " + date);
+        filterDates(date);
 
-        allHistory=new ArrayList<>();
-        initData();
-        childAdapter =new HistoryChildAdapter(context, allHistory);
+        childAdapter =new HistoryChildAdapter(context, currentHistory);
 
 
         holder.tvDate.setText(date);
@@ -56,26 +59,16 @@ public class HistoryParentAdapter extends RecyclerView.Adapter<HistoryParentAdap
         childAdapter.notifyDataSetChanged();
     }
 
-    private void initData() {
-        ParseQuery<History> query2 = ParseQuery.getQuery(History.class);
-        query2.include(History.KEY_USER);
-        query2.addDescendingOrder(History.KEY_CREATED_AT);
-        query2.findInBackground(new FindCallback<History>() {
-            @Override
-            public void done(List<History> histories, ParseException e) {
-//                allHistory.addAll(histories);
-                for(int i=0; i<histories.size();i++){
-                    Log.i(TAG,"history: "+ histories.get(i).getWorkoutDay());
-
-                    if(histories.get(i).getWorkoutDay().equals("06-03-2020")){ //Hardcoded the date to check if worokouts are done on this date
-                        allHistory.add(histories.get(i));
-                    }
-                }
-                Log.i(TAG,"history size: " + allHistory.size());
-
+    private void filterDates(String date) {
+        for(int i=0;i<allHistory.size();i++){
+            Log.i(TAG, "allHistory: "+ allHistory.get(i));
+            if(allHistory.get(i).getWorkoutDay().equals(date)){
+                currentHistory.add(allHistory.get(i));
+                Log.i(TAG,"true "+date+ "currentHistory" + currentHistory);
             }
-        });
+        }
     }
+
 
     @Override
     public int getItemCount() {

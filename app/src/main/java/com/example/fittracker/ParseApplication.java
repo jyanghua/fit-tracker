@@ -3,6 +3,8 @@ package com.example.fittracker;
 import android.app.Application;
 
 //import com.example.parstagram.models.Post;
+import com.example.fittracker.workout.AvailableWorkouts;
+import com.example.fittracker.workout.PresetWorkout;
 import com.parse.Parse;
 import com.parse.ParseObject;
 

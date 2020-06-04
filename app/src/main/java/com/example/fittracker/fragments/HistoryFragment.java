@@ -54,8 +54,7 @@ public class HistoryFragment extends Fragment {
 
         dates =new ArrayList<>();
         initData();
-        Log.i(TAG,"dates: "+ allHistory);
-        adapter= new HistoryParentAdapter(getContext(), dates);
+        adapter= new HistoryParentAdapter(getContext(), dates, allHistory);
 
 
         rvHistory.setAdapter(adapter);
@@ -72,6 +71,8 @@ public class HistoryFragment extends Fragment {
             @Override
             public void done(List<History> histories, ParseException e) {
                 allHistory.addAll(histories);
+                Log.i(TAG,"history: "+ allHistory);
+
                 for(int i=0; i<histories.size();i++){
                     dates.add(histories.get(i).getWorkoutDay());}
                 Set<String> uniqueDates=new HashSet<String>(dates);
