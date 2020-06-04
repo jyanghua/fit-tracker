@@ -1,0 +1,1 @@
+parse-dashboard --appId codepath-fit-tracker --masterKey CodepathFitTracker --serverURL "https://codepath-fit-tracker.herokuapp.com/parse"
