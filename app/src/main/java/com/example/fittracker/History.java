@@ -4,6 +4,7 @@ import com.parse.ParseClassName;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,13 +35,12 @@ public class History extends ParseObject{
     public int getSets(){
         return getInt(KEY_SETS);
     }
-    public void setReps(int reps) {put(KEY_SETS, reps);}
+    public void setSets(Number sets) {put(KEY_SETS, sets);}
 
-    public void setSets(int reps){
+    public void setReps(int reps){
         put(KEY_REPS,reps);
     }
-
-    public void setKeyReps(ArrayList<Integer> reps) {put(KEY_REPS, reps.toString());}
+    public void setKeyReps(ArrayList reps) {put(KEY_REPS, reps);}
 
     public List<String> getReps(){
         return getList(KEY_REPS);
@@ -59,14 +59,14 @@ public class History extends ParseObject{
     public int getDuration(){
         return getInt(KEY_DURATION);
     }
-    public void setDuration(int duration){
-        put(KEY_SETS, duration);
+    public void setDuration(Number duration){
+        put(KEY_DURATION, duration);
     }
 
     public int getWeight(){
         return getInt(KEY_WEIGHT);
     }
-    public void setWeight(int weight){
+    public void setWeight(Number weight){
         put(KEY_WEIGHT, weight);
     }
 

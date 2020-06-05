@@ -3,6 +3,7 @@ package com.example.fittracker.workout;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +26,7 @@ import kotlin.jvm.JvmOverloads;
 
 public class NewWorkoutAdapter extends RecyclerView.Adapter<NewWorkoutAdapter.ViewHolder> {
 
+    public static final String TAG = "NewWorkoutAdapter";
     private Context context;
     private List<PresetWorkout> presetWorkouts;
     private List<Workout> currentWorkouts;
@@ -112,11 +114,16 @@ public class NewWorkoutAdapter extends RecyclerView.Adapter<NewWorkoutAdapter.Vi
                     @Override
                     public void afterTextChanged(Editable editable) {
                         if ( editable.toString().length() == 0 ) return;
+
                         if (currentWorkouts.get(index).getType().equals("duration")) {
+                            Log.i(TAG, "Setting the Duration of " + currentWorkouts.get(index).getName());
                             currentWorkouts.get(index).setDuration(editable.toString());
                         }
                         else {
-                            currentWorkouts.get(index).addRep(Integer.decode(editable.toString()));
+                            Log.i(TAG, "Setting the Reps of " + currentWorkouts.get(index).getName());
+                            currentWorkouts.get(index).setReps(Integer.decode(editable.toString()));
+                            Log.i(TAG, "The Reps of " + currentWorkouts.get(index).getName() + " instance " + index + "" +
+                                    " - Reps: " + currentWorkouts.get(index).getReps());
                         }
                     }
                 });
@@ -138,7 +145,8 @@ public class NewWorkoutAdapter extends RecyclerView.Adapter<NewWorkoutAdapter.Vi
             } else {
                 etWeight.setText(Integer.toString(workout.getWeight()));
             }
-            etrepsDuration.setText(workout.getDuration());
+            if ( workout.getType().equals("duration")) etrepsDuration.setText(workout.getDuration());
+            else etrepsDuration.setText(Integer.toString(workout.getReps()));
         }
     }
 }

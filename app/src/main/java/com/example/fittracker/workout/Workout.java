@@ -20,7 +20,7 @@ public class Workout {
         this.type = type;
         this.reps = 0;
         this.weight = 0;
-        this.duration = "0 seconds";
+        this.duration = "0";
     }
 
     public String getName() {
@@ -47,7 +47,7 @@ public class Workout {
         return this.reps;
     }
 
-    public void addRep(int reps) {
+    public void setReps(int reps) {
         this.reps = reps;
     }
 
