@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarProfile"
@@ -10,12 +11,101 @@
         android:layout_height="wrap_content">
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Profile Fragment"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvUserProfile"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:padding="25dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/toolbarProfile" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="15dp">
+
+            <ImageView
+                android:id="@+id/ivProfilePhoto"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                tools:srcCompat="@tools:sample/avatars"
+                android:src="@drawable/logo"/>
+
+            <TextView
+                android:id="@+id/tvUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="9dp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/ivProfilePhoto"
+                android:text=""
+                android:textSize="18sp"
+                tools:text="Username" />
+
+            <TextView
+                android:id="@+id/tvLabelNumWorkouts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvUsername"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/ivProfilePhoto"
+                android:text="@string/workouts_completed"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvNumWorkouts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvUsername"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/tvLabelNumWorkouts"
+                android:text=""
+                android:textSize="16sp"
+                tools:text="152" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvFavoriteWorkouts"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:padding="25dp"
+        android:layout_margin="15dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="10dp"
+        android:layout_below="@id/cvUserProfile" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTitlePieChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/favorite_workouts"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pcWorkouts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="18dp">
+            </com.github.mikephil.charting.charts.PieChart>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

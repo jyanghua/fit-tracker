@@ -24,7 +24,6 @@ public class History extends ParseObject{
     public static final String KEY_DATE= "WorkoutDay";
     public static final String KEY_CREATED_AT="createdAt";
 
-
     public String getName(){
         return getString(KEY_NAME);
     }
@@ -40,6 +39,7 @@ public class History extends ParseObject{
     public void setReps(int reps){
         put(KEY_REPS,reps);
     }
+
     public void setKeyReps(ArrayList reps) {put(KEY_REPS, reps);}
 
     public List<String> getReps(){
@@ -52,6 +52,7 @@ public class History extends ParseObject{
     public String getType(){
         return getString(KEY_TYPE);
     }
+
     public void setType(String type){
         put(KEY_TYPE, type);
     }
@@ -59,6 +60,7 @@ public class History extends ParseObject{
     public int getDuration(){
         return getInt(KEY_DURATION);
     }
+
     public void setDuration(Number duration){
         put(KEY_DURATION, duration);
     }
@@ -66,6 +68,7 @@ public class History extends ParseObject{
     public int getWeight(){
         return getInt(KEY_WEIGHT);
     }
+
     public void setWeight(Number weight){
         put(KEY_WEIGHT, weight);
     }
@@ -73,6 +76,7 @@ public class History extends ParseObject{
     public ParseUser getUser(){
         return getParseUser(KEY_USER);
     }
+
     public void setUser(ParseUser user) {put(KEY_USER, user);}
 
     public String getWorkoutDay(){
@@ -84,5 +88,9 @@ public class History extends ParseObject{
 
     public void setWorkoutDay(Date workoutDay) {
         put(KEY_DATE, workoutDay);
+    }
+
+    public Date getDate(){
+        return getDate(KEY_DATE);
     }
 }

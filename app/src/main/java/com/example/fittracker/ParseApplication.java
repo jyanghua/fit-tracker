@@ -19,6 +19,7 @@ public class ParseApplication extends Application {
 
         ParseObject.registerSubclass(AvailableWorkouts.class);
         ParseObject.registerSubclass(PresetWorkout.class);
+        ParseObject.registerSubclass(History.class);
         // set applicationId, and server server based on the values in the Heroku settings.
         // clientKey is not needed unless explicitly configured
         // any network interceptors must be added with the Configuration Builder given this syntax

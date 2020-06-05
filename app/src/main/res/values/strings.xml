@@ -21,4 +21,6 @@
     <string name="Number" />
     <string name="finish">Finish</string>
     <string name="available_workouts">Available Workouts</string>
+    <string name="favorite_workouts">Favorite Workouts</string>
+    <string name="workouts_completed">Workouts completed:</string>
 </resources>
