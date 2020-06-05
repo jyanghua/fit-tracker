@@ -7,8 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +25,7 @@ import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AddWorkoutFragment extends Fragment {
 
@@ -30,7 +34,6 @@ public class AddWorkoutFragment extends Fragment {
     protected WorkoutAdapter wAdapter;
     protected List<AvailableWorkouts> allWorkouts;
     private Activity hostActivity;
-
 
     public AddWorkoutFragment() {
         //Required Empty Constructor
@@ -44,6 +47,7 @@ public class AddWorkoutFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         return inflater.inflate(R.layout.fragment_add_workout, container, false);
     }
 
@@ -58,6 +62,7 @@ public class AddWorkoutFragment extends Fragment {
         rvWorkouts.setAdapter(wAdapter);
         rvWorkouts.setLayoutManager(new LinearLayoutManager(getContext()));
         getWorkoutsFromParse();
+
     }
 
     protected void getWorkoutsFromParse () {
