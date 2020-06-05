@@ -116,8 +116,7 @@ public class NewWorkoutAdapter extends RecyclerView.Adapter<NewWorkoutAdapter.Vi
                             currentWorkouts.get(index).setDuration(editable.toString());
                         }
                         else {
-                            currentWorkouts.get(index).clearReps();
-                            currentWorkouts.get(index).addAllReps(editable.toString());
+                            currentWorkouts.get(index).addRep(Integer.decode(editable.toString()));
                         }
                     }
                 });
@@ -134,7 +133,11 @@ public class NewWorkoutAdapter extends RecyclerView.Adapter<NewWorkoutAdapter.Vi
         public void bind(Workout workout, int position) {
             tvsetNumber.setText(Integer.toString(position + 1));
             index = position;
-            etWeight.setText(Integer.toString(workout.getWeight()));
+            if (Integer.toString(workout.getWeight()).equals("")) {
+                etWeight.setText(0);
+            } else {
+                etWeight.setText(Integer.toString(workout.getWeight()));
+            }
             etrepsDuration.setText(workout.getDuration());
         }
     }

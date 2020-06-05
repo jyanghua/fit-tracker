@@ -1,14 +1,16 @@
 package com.example.fittracker.workout;
 
-import java.util.ArrayList;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
+import java.util.ArrayList;
 
 public class Workout {
 
     public String name;
     public int sets;
     public String duration;
-    public ArrayList<Integer> reps;
+    public int reps;
     public int weight;
     public String type;
 
@@ -16,7 +18,9 @@ public class Workout {
     public Workout ( String name, String type) {
         this.name = name;
         this.type = type;
-        this.reps = new ArrayList<Integer>();
+        this.reps = 0;
+        this.weight = 0;
+        this.duration = "0 seconds";
     }
 
     public String getName() {
@@ -39,22 +43,12 @@ public class Workout {
         this.duration = duration;
     }
 
-    public void addReps(int rep) {
-        this.reps.add(rep);
+    public int getReps() {
+        return this.reps;
     }
 
-    public void addAllReps(String reps) {
-        if ( reps.length() == 0 ) {
-            return;
-        }
-
-        for ( String rep : reps.split(",")) {
-            this.addReps(Integer.decode(rep));
-        }
-    }
-
-    public void clearReps() {
-        this.reps.clear();
+    public void addRep(int reps) {
+        this.reps = reps;
     }
 
     public int getWeight() {
