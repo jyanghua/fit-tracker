@@ -8,6 +8,7 @@
     <string name="logo">Logo</string>
     <string name="create_new_account">Create New Account</string>
     <string name="logout">Logout</string>
+<<<<<<< HEAD
     <string name="planks">planks</string>
     <string name="tricep_dips">tricep_dips</string>
     <string name="squats">squats</string>
@@ -18,4 +19,15 @@
     <string name="bicycle_crunches">bicyle_crunches</string>
     <string name="side_planks">side_planks</string>
     <string name="dumbbell_curls">dumbbell_curls</string>
+    <string name="name_of_workout">Name of Workout</string>
+    <string name="add_workout">Add Workout</string>
+    <string name="add_a_workout_note">Add a Workout Note</string>
+    <string name="add_set">Add Set</string>
+    <string name="workout_history">Workout History</string>
+    <string name="workout">Workout</string>
+    <string name="workout_name">Workout Name</string>
+    <string name="button">Button</string>
+    <string name="name">Name</string>
+    <string name="textview">TextView</string>
+    <string name="Number" />
 </resources>
