@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fittracker.History;
 import com.example.fittracker.R;
@@ -19,15 +20,19 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,9 +53,10 @@ public class NewWorkoutFragment extends Fragment {
     protected EditText etWorkoutNote;
     protected TextView tvLabels;
     protected Button btnAddSet;
+    protected Button btnFinish;
     protected TextView tvWorkoutHistoryText;
-    protected String labelReps =     "Set            Reps            Weight";
-    protected String labelDuration = "Set            Duration        Weight";
+    protected String labelReps =     "Set            Weight        Reps";
+    protected String labelDuration = "Set            Weight        Duration";
     protected String workoutHistory = "Workout History";
 
     public NewWorkoutFragment () {
@@ -78,7 +84,7 @@ public class NewWorkoutFragment extends Fragment {
         etWorkoutNote = view.findViewById(R.id.etWorkoutNote);
 
         tvLabels = view.findViewById(R.id.tvLabels);
-        if ( parentWorkout.getType().equals("reps") ) {
+        if ( parentWorkout.getType().equals("repetition") ) {
             tvLabels.setText(labelReps);
         }
         else {
@@ -86,6 +92,7 @@ public class NewWorkoutFragment extends Fragment {
         }
 
         btnAddSet = view.findViewById(R.id.btnAddSet);
+        btnFinish = view.findViewById(R.id.btnSubmitWorkout);
         tvWorkoutHistoryText = view.findViewById(R.id.tvWorkoutHistory);
         tvWorkoutHistoryText.setText(workoutHistory);
 
@@ -113,6 +120,19 @@ public class NewWorkoutFragment extends Fragment {
                 newWorkoutAdapter.notifyDataSetChanged();
             }
         });
+
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( currentSets.size() == 0 ) {
+                    Toast.makeText(getContext(), "No Workout was Added", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    pushDataToParse();
+                }
+                returnToTopFragment();
+            }
+        });
     }
 
     private void getCurrentWorkoutHistory() {
@@ -138,7 +158,7 @@ public class NewWorkoutFragment extends Fragment {
 
     public void getPresetWorkouts() {
         ParseQuery<PresetWorkout> query = ParseQuery.getQuery(PresetWorkout.class);
-
+        query.whereContains(PresetWorkout.KEY_NAME, parentWorkout.getName());
         query.findInBackground(new FindCallback<PresetWorkout>() {
             @Override
             public void done(List<PresetWorkout> objects, ParseException e) {
@@ -154,5 +174,49 @@ public class NewWorkoutFragment extends Fragment {
                 newWorkoutAdapter.getPresetWorkouts().addAll(objects);
             }
         });
+    }
+
+    public void pushDataToParse(){
+        History history = new History();
+        ParseUser user = ParseUser.getCurrentUser();
+        Date date = new Date();
+            Log.i(TAG, date.toString());
+        ArrayList<Integer> reps = new ArrayList<>();
+
+        history.setName(parentWorkout.getName());
+        history.setUser(user);
+        history.setSets(currentSets.size());
+        history.setType(parentWorkout.getType());
+        history.setWeight(currentSets.get(0).getWeight());
+        history.setWorkoutDay(date);
+
+        if (parentWorkout.getType().equals("repetition")) {
+            for ( Workout workout : currentSets) {
+                reps.add(workout.getReps());
+            }
+            history.setKeyReps(reps);
+        }
+        else {
+            String duration = (currentSets.get(0).getDuration().split(" "))[0];
+            history.setDuration(Integer.decode(duration));
+        }
+
+        history.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if ( e != null ) {
+                    Log.e(TAG, "Error Pushing to Parse");
+                    Toast.makeText(getContext(), "There was an error pushing to the server", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "Successfully Pushed to Parse");
+            }
+        });
+    }
+
+    private void returnToTopFragment() {
+        AppCompatActivity activity = (AppCompatActivity) btnFinish.getContext();
+        Fragment fragment = new AddWorkoutFragment();
+        activity.getSupportFragmentManager().beginTransaction().
+                replace(R.id.mainContainer, fragment).addToBackStack(null).commit();
     }
 }
