@@ -65,7 +65,7 @@ public class HistoryFragment extends Fragment {
     private void initData() {
         ParseQuery<History> query= ParseQuery.getQuery(History.class);
         query.include(History.KEY_USER);
-        query.whereEqualTo(History.KEY_USER, ParseUser.getCurrentUser());
+//        query.whereEqualTo(History.KEY_USER, ParseUser.getCurrentUser());
         query.addDescendingOrder(History.KEY_CREATED_AT);
         query.findInBackground(new FindCallback<History>() {
             @Override

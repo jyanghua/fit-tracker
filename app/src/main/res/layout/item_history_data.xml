@@ -43,11 +43,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_below="@+id/tvName"
-        android:layout_centerInParent="false"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="0dp"
-        android:layout_toEndOf="@+id/tvSets"
+        android:layout_below="@+id/tvDuration"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
         android:textSize="18sp"
         tools:text="Weight: N/A" />
 
@@ -55,10 +54,10 @@
         android:id="@+id/tvDuration"
         android:layout_width="118dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvWeight"
-        android:layout_marginStart="20dp"
+        android:layout_below="@+id/tvReps"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="39dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/tvReps"
         android:textSize="18sp"
         tools:text="Duration: N/A" />
 </RelativeLayout>
