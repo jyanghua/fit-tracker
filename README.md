@@ -19,6 +19,7 @@ will be able to add other excercises such as running, swimming, and situps.
 
 ## Wireframes
 <img src="./docs/Wireframe.PNG" width=600>
+
 * Screen 1: Profile screen where the user can see their workout progress over time.
 * Screen 2: Screen where the user can start a new workout session and add workouts.
 * Screen 3: Screen after the user selects a specific workout to add the amount of sets they wish to do, the weight, and          reps/duration.
