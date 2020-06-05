@@ -1,7 +1,6 @@
-package com.example.fittracker;
+package com.example.fittracker.workout;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,27 +9,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fittracker.History;
+import com.example.fittracker.R;
+
 import java.util.List;
 
-public class HistoryChildAdapter extends RecyclerView.Adapter<HistoryChildAdapter.ViewHolder> {
+public class currentWorkoutHistoryAdapter extends RecyclerView.Adapter<currentWorkoutHistoryAdapter.ViewHolder> {
 
-
-
-    public static final String TAG="HistoryChildAdapter";
-
-    private List<History> histories;
     private Context context;
-
-    public HistoryChildAdapter(Context context, List<History> histories) {
+    private List<History>histories;
+    public currentWorkoutHistoryAdapter(Context context, List<History> histories) {
         this.context=context;
-        this.histories = histories;
+        this.histories=histories;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater= LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.item_history_data,parent,false);
+        View view= LayoutInflater.from(context).inflate(R.layout.current_workout_history,parent, false);
 
         return new ViewHolder(view);
     }
@@ -38,7 +34,6 @@ public class HistoryChildAdapter extends RecyclerView.Adapter<HistoryChildAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         History history=histories.get(position);
-        Log.i(TAG,"history: " + history);
         holder.bind(history);
     }
 
@@ -49,40 +44,43 @@ public class HistoryChildAdapter extends RecyclerView.Adapter<HistoryChildAdapte
 
     class ViewHolder extends RecyclerView.ViewHolder{
 
+        private TextView tvDate;
         private TextView tvName;
         private TextView tvReps;
         private TextView tvSets;
-        private TextView tvWeight;
         private TextView tvDuration;
+        private TextView tvWeight;
+
+
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            tvDate= itemView.findViewById(R.id.tvDate);
             tvName=itemView.findViewById(R.id.tvName);
-            tvReps=itemView.findViewById(R.id.tvReps);
-            tvSets=itemView.findViewById(R.id.tvSets);
-            tvWeight=itemView.findViewById(R.id.tvWeight);
-            tvDuration=itemView.findViewById(R.id.tvDuration);
-
+            tvDuration= itemView.findViewById(R.id.tvDuration);
+            tvReps= itemView.findViewById(R.id.tvReps);
+            tvSets= itemView.findViewById(R.id.tvSets);
+            tvWeight= itemView.findViewById(R.id.tvWeight);
         }
 
         public void bind(History history) {
-            tvName.setText(history.getName());
+            tvDate.setText(history.getWorkoutDay());
+            tvName.setText("Name: "+history.getName());
             tvSets.setText("Sets: "+history.getSets());
-            if (history.getDuration() ==0){
-                tvDuration.setText("Duration: N/A");
-                tvReps.setText("Reps: "+ history.getReps());
 
+            if(history.getDuration()==0){
+                tvDuration.setText("Duration: N/A");
+                tvReps.setText("Reps: "+history.getReps());
             }else{
                 tvDuration.setText("Duration: "+ history.getDuration());
                 tvReps.setText("Reps: N/A");
             }
-
             if (history.getWeight()==0){
                 tvWeight.setText("Weight: N/A");
             }else{
-                tvWeight.setText("Weight: "+ history.getWeight()+"lbs");
+                tvWeight.setText("Weight: "+ history.getWeight());
             }
-
         }
     }
 }

@@ -8,28 +8,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.fittracker.History;
 import com.example.fittracker.R;
 import com.example.fittracker.workout.NewWorkoutAdapter;
 import com.example.fittracker.workout.PresetWorkout;
 import com.example.fittracker.workout.Workout;
+import com.example.fittracker.workout.currentWorkoutHistoryAdapter;
 import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,22 +37,20 @@ public class NewWorkoutFragment extends Fragment {
     public static final String TAG  = "NewWorkoutFragment";
     private RecyclerView rvWorkouts;
     private RecyclerView rvWorkoutHistory;
-
     protected NewWorkoutAdapter newWorkoutAdapter;
+    protected currentWorkoutHistoryAdapter currentWorkoutHistoryAdapter;
     protected Workout parentWorkout;
+
+    protected List<History> currentWorkoutHistory;
     protected List<Workout> currentSets;
     protected List<PresetWorkout> presetWorkouts;
     protected TextView tvWorkoutName;
-    protected TextView tvWorkoutHistoryText;
-    protected TextView tvLabels;
-
     protected EditText etWorkoutNote;
-
+    protected TextView tvLabels;
     protected Button btnAddSet;
-    protected Button btnFinish;
-
-    protected String labelReps =     "Set                 Weight            Reps";
-    protected String labelDuration = "Set                 Weight        Duration";
+    protected TextView tvWorkoutHistoryText;
+    protected String labelReps =     "Set            Reps            Weight";
+    protected String labelDuration = "Set            Duration        Weight";
     protected String workoutHistory = "Workout History";
 
     public NewWorkoutFragment () {
@@ -82,7 +78,7 @@ public class NewWorkoutFragment extends Fragment {
         etWorkoutNote = view.findViewById(R.id.etWorkoutNote);
 
         tvLabels = view.findViewById(R.id.tvLabels);
-        if ( parentWorkout.getType().equals("repetition") ) {
+        if ( parentWorkout.getType().equals("reps") ) {
             tvLabels.setText(labelReps);
         }
         else {
@@ -90,17 +86,21 @@ public class NewWorkoutFragment extends Fragment {
         }
 
         btnAddSet = view.findViewById(R.id.btnAddSet);
-        btnFinish = view.findViewById(R.id.btnSubmitWorkout);
-
         tvWorkoutHistoryText = view.findViewById(R.id.tvWorkoutHistory);
         tvWorkoutHistoryText.setText(workoutHistory);
 
+        rvWorkoutHistory=view.findViewById(R.id.rvWorkOutHistory); //Recycler view for workout history identified
+
         rvWorkouts = view.findViewById(R.id.rvWorkoutSets);
+        currentWorkoutHistory= new ArrayList<>();
+        getCurrentWorkoutHistory();
         currentSets = new ArrayList<>();
         presetWorkouts = new ArrayList<>();
         getPresetWorkouts();
         newWorkoutAdapter = new NewWorkoutAdapter(getContext(), currentSets);
-
+        currentWorkoutHistoryAdapter=new currentWorkoutHistoryAdapter(getContext(),currentWorkoutHistory);
+        rvWorkoutHistory.setAdapter(currentWorkoutHistoryAdapter);
+        rvWorkoutHistory.setLayoutManager(new LinearLayoutManager(getContext()));
         rvWorkouts.setAdapter(newWorkoutAdapter);
         rvWorkouts.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -113,59 +113,25 @@ public class NewWorkoutFragment extends Fragment {
                 newWorkoutAdapter.notifyDataSetChanged();
             }
         });
-
-        btnFinish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ( currentSets.size() == 0 ) {
-                    Toast.makeText(getContext(), "No Workout was Added", Toast.LENGTH_SHORT).show();
-                    AppCompatActivity activity = (AppCompatActivity) btnFinish.getContext();
-                    Fragment fragment = new AddWorkoutFragment();
-                    activity.getSupportFragmentManager().beginTransaction().
-                            replace(R.id.mainContainer, fragment).addToBackStack(null).commit();
-                    return;
-                }
-                pushToParse(currentSets);
-            }
-        });
     }
 
-    public void pushToParse(List<Workout> currentSets ) {
-
-        History history = new History();
-        ArrayList<Integer> reps = new ArrayList<>();
-        ParseUser user = ParseUser.getCurrentUser();
-        Date date = new Date();
-        Log.i(TAG, date.toString());
-
-        history.setName(parentWorkout.getName());
-        history.setUser(user);
-        history.setType(parentWorkout.getType());
-        history.setReps(currentSets.size());
-        history.setWorkoutDay(date);
-
-        if (parentWorkout.getType().equals("repetition")) {
-            for (Workout workout : currentSets) {
-                reps.add(workout.getReps());
-            }
-            history.setKeyReps(reps);
-        }
-        else {
-            history.setDuration(Integer.decode(currentSets.get(0).getDuration()));
-        }
-
-        history.saveInBackground(new SaveCallback() {
+    private void getCurrentWorkoutHistory() {
+        ParseQuery<History> query= ParseQuery.getQuery(History.class);
+        query.include(History.KEY_USER);
+        query.whereEqualTo(History.KEY_USER, ParseUser.getCurrentUser());
+        query.addDescendingOrder(History.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<History>() {
             @Override
-            public void done(ParseException e) {
-                if ( e != null ) {
-                    Log.e(TAG, "Error While Saving", e);
-                    Toast.makeText(getContext(), "Error While Saving!", Toast.LENGTH_SHORT).show();
+            public void done(List<History> histories, ParseException e) {
+
+                for(int i=0; i<histories.size(); i++){
+                    if(histories.get(i).getName().equals(parentWorkout.getName())){
+                        currentWorkoutHistory.add(histories.get(i));
+                        Log.i(TAG,"history: "+ currentWorkoutHistory);
+
+                    }
                 }
-                Log.i(TAG, "Successfully Pushed");
-                AppCompatActivity activity = (AppCompatActivity) btnFinish.getContext();
-                Fragment fragment = new AddWorkoutFragment();
-                activity.getSupportFragmentManager().beginTransaction().
-                        replace(R.id.mainContainer, fragment).addToBackStack(null).commit();
+                currentWorkoutHistoryAdapter.notifyDataSetChanged();
             }
         });
     }
