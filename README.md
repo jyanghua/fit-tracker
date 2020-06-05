@@ -15,7 +15,6 @@ Due to time constraints, the user will be allowed to focus on specific workouts 
 will be able to add other excercises such as running, swimming, and situps.  
 
 ## Walkthrough
-[include GIF(s)]
 <img src='walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
