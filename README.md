@@ -16,6 +16,9 @@ will be able to add other excercises such as running, swimming, and situps.
 
 ## Walkthrough
 [include GIF(s)]
+<img src='walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+
+GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Wireframes
 <img src="./docs/Wireframe.PNG" width=600>
